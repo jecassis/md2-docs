@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>INSTALL</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="pandoc-docs.css" />
+</head>
+<body>
+<nav class="doc-nav" aria-label="Documentation navigation">
+  <a href="index.html">Home</a>
+  <a href="install.html">Install</a>
+  <a href="manual.html">Manual</a>
+  <a href="presets.html">Presets</a>
+  <a href="textures.html">Textures</a>
+  <a href="resources.html">Resources</a>
+</nav>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#foo_vis_milk2-installation-guide"
+id="toc-foo_vis_milk2-installation-guide"><code>foo_vis_milk2</code>
+Installation Guide</a>
+<ul>
+<li><a href="#system-requirements" id="toc-system-requirements">System
+Requirements</a></li>
+<li><a href="#download" id="toc-download">Download</a></li>
+<li><a href="#installation" id="toc-installation">Installation</a></li>
+<li><a href="#first-run" id="toc-first-run">First Run</a>
+<ul>
+<li><a href="#default-ui" id="toc-default-ui">Default UI</a></li>
+<li><a href="#columns-ui" id="toc-columns-ui">Columns UI</a></li>
+</ul></li>
+<li><a href="#directory-structure"
+id="toc-directory-structure">Directory Structure</a></li>
+<li><a href="#configuration"
+id="toc-configuration">Configuration</a></li>
+<li><a href="#adding-presets" id="toc-adding-presets">Adding
+Presets</a></li>
+<li><a href="#updating" id="toc-updating">Updating</a></li>
+<li><a href="#uninstalling" id="toc-uninstalling">Uninstalling</a></li>
+<li><a href="#troubleshooting"
+id="toc-troubleshooting">Troubleshooting</a>
+<ul>
+<li><a href="#black-screen--no-visuals"
+id="toc-black-screen--no-visuals">Black screen / no visuals</a></li>
+<li><a href="#no-audio-response" id="toc-no-audio-response">No audio
+response</a></li>
+<li><a href="#presets-not-working-correctly"
+id="toc-presets-not-working-correctly">Presets not working
+correctly</a></li>
+<li><a href="#visualizer-wont-start"
+id="toc-visualizer-wont-start">Visualizer won't start</a></li>
+<li><a href="#presets-not-showing-up"
+id="toc-presets-not-showing-up">Presets not showing up</a></li>
+</ul></li>
+<li><a href="#support" id="toc-support">Support</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="foo_vis_milk2-installation-guide"><code>foo_vis_milk2</code>
+Installation Guide</h1>
+<h2 id="system-requirements">System Requirements</h2>
+<ul>
+<li><strong>OS</strong>: Windows 10 or later (Windows 11
+recommended)</li>
+<li><strong>GPU</strong>: DirectX 11.1 compatible graphics card</li>
+<li><strong>Host</strong>: <a
+href="https://www.foobar2000.org/download">foobar2000</a> v2.0 or
+later</li>
+<li><strong>Disk</strong>: ~1 MB for the component; add preset packs as
+needed (see <a href="resources.html">Resources Guide</a>)</li>
+</ul>
+<p>No additional runtime libraries are required. Some features such as
+hybrid graphics, high DPI displays, and HDR may require a newer DXGI
+version than what is installed on the system.</p>
+<h2 id="download">Download</h2>
+<p>Download the latest <code>foo_vis_milk2.fb2k-component</code> from
+the <a
+href="https://www.foobar2000.org/components/view/foo_vis_milk2">component
+page</a> or the <a
+href="https://github.com/jecassis/foo_vis_milk2/releases/latest">GitHub
+Releases</a> page.</p>
+<h2 id="installation">Installation</h2>
+<ol type="1">
+<li>Open foobar2000.</li>
+<li>Go to <strong>File &gt; Preferences &gt; Components</strong>.</li>
+<li>Click <strong>Install...</strong> and select the downloaded
+<code>foo_vis_milk2.fb2k-component</code> file.</li>
+<li>Restart foobar2000 when prompted.</li>
+</ol>
+<p>The component registers itself as a visualization plugin. No registry
+entries are created outside of foobar2000's configuration.</p>
+<h2 id="first-run">First Run</h2>
+<p>After installation, add the visualizer to your layout:</p>
+<h3 id="default-ui">Default UI</h3>
+<ol type="1">
+<li>Right-click on a panel area in the foobar2000 window.</li>
+<li>Select <strong>Visualizations &gt; MilkDrop 2</strong>.</li>
+</ol>
+<h3 id="columns-ui">Columns UI</h3>
+<ol type="1">
+<li>Right-click on a panel area.</li>
+<li>Select <strong>MilkDrop 2</strong> from the available panels.</li>
+</ol>
+<p>On first run, the component creates the required directories under
+your foobar2000 profile:</p>
+<ul>
+<li><code>milkdrop2\presets\</code> — Preset directory</li>
+<li><code>milkdrop2\textures\</code> — Texture files</li>
+</ul>
+<p>Play some music and the visualizer responds automatically.</p>
+<p><strong>Essential shortcuts:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>F1</strong></td>
+<td>Show/hide help overlay</td>
+</tr>
+<tr>
+<td><strong>SPACE</strong></td>
+<td>Next preset (soft blend)</td>
+</tr>
+<tr>
+<td><strong>H</strong></td>
+<td>Hard cut to next preset</td>
+</tr>
+<tr>
+<td><strong>ALT+ENTER</strong></td>
+<td>Toggle fullscreen</td>
+</tr>
+<tr>
+<td><strong>BACKSPACE</strong></td>
+<td>Previous preset</td>
+</tr>
+<tr>
+<td><strong>ESC</strong></td>
+<td>Exit fullscreen</td>
+</tr>
+</tbody>
+</table>
+<h2 id="directory-structure">Directory Structure</h2>
+<p>After installation, the component uses the following paths under the
+foobar2000 profile directory:</p>
+<pre><code>&lt;foobar2000 profile&gt;\
+  milkdrop2\
+    presets\              — Preset collections
+      *.milk              — MilkDrop 1 or MilkDrop 2 preset files
+      *.milk2             — MilkDrop 3 double preset files
+      preset_order.csv    — Optional preset scheduling (CSV with header)
+      playlist.txt        — Alternate optional preset scheduling file name (still CSV with header)
+    textures\             — Texture files referenced by presets
+    cache\                — Compiled shader bytecode cache (created on demand)
+    debug\                — Shader source dumps (HLSL, created on demand)
+    screenshots\          — Screenshot output directory (created on demand)
+    milk2_msg.ini         — Custom message definitions (slots 00-99)
+    milk2_img.ini         — Sprite/texture definitions (slots 00-99)</code></pre>
+<h2 id="configuration">Configuration</h2>
+<p><code>foo_vis_milk2</code> stores all configuration in foobar2000's
+preferences system. Open <strong>File &gt; Preferences &gt;
+Visualization &gt; MilkDrop 2</strong> to access settings.</p>
+<p>The only files that use INI format are:</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>milk2_msg.ini</code></td>
+<td>Custom text messages with font, color, and animation</td>
+</tr>
+<tr>
+<td><code>milk2_img.ini</code></td>
+<td>Image overlay definitions with blend modes and EEL code</td>
+</tr>
+</tbody>
+</table>
+<h2 id="adding-presets">Adding Presets</h2>
+<p><code>foo_vis_milk2</code> uses <code>.milk</code> preset files
+compatible with MilkDrop 2.</p>
+<p>To add presets:</p>
+<ol type="1">
+<li>Create a subfolder in <code>milkdrop2\presets\</code> (e.g.,
+<code>milkdrop2\presets\MyPresets\</code>)</li>
+<li>Copy <code>.milk</code> files into that folder</li>
+<li>The new presets appear when you press <strong>L</strong> to open the
+preset browser</li>
+</ol>
+<p>See the <a href="resources.html">Resources Guide</a> for recommended
+preset collections.</p>
+<h2 id="updating">Updating</h2>
+<ol type="1">
+<li>Download the new <code>foo_vis_milk2.fb2k-component</code>
+file.</li>
+<li>Import it via <strong>File &gt; Preferences &gt; Components &gt;
+Install...</strong></li>
+<li>Restart foobar2000.</li>
+</ol>
+<p>Your configuration and preset library are not affected by
+updates.</p>
+<h2 id="uninstalling">Uninstalling</h2>
+<ol type="1">
+<li>Go to <strong>File &gt; Preferences &gt; Components</strong>.</li>
+<li>Select <strong>MilkDrop 2</strong> and click
+<strong>Remove</strong>.</li>
+<li>Restart foobar2000.</li>
+</ol>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="black-screen--no-visuals">Black screen / no visuals</h3>
+<ul>
+<li>Ensure your GPU supports DirectX 11.1.</li>
+<li>Update your graphics drivers to the latest version.</li>
+<li>Press <strong>SPACE</strong> to load a different preset — some
+presets may fail to compile on certain GPUs.</li>
+</ul>
+<h3 id="no-audio-response">No audio response</h3>
+<ul>
+<li>Make sure music is playing in foobar2000.</li>
+<li>The visualizer receives audio directly from foobar2000's playback
+pipeline — no audio routing is needed.</li>
+</ul>
+<h3 id="presets-not-working-correctly">Presets not working
+correctly</h3>
+<ul>
+<li>Some older presets may use expression syntax that is not accepted by
+the active evaluator. Check preset equation sections and update
+deprecated constructs if compilation fails.</li>
+<li>Shader Model 4.0 minimum may cause some very old presets to render
+differently.</li>
+</ul>
+<h3 id="visualizer-wont-start">Visualizer won't start</h3>
+<ul>
+<li>Ensure foobar2000 v2.0 or later is installed.</li>
+<li>Try removing and re-adding the visualization panel.</li>
+<li>Check the foobar2000 console (<strong>View &gt; Console</strong>)
+for error messages.</li>
+</ul>
+<h3 id="presets-not-showing-up">Presets not showing up</h3>
+<ul>
+<li>Presets must be <code>.milk</code> or <code>.milk2</code> files
+placed inside <code>milkdrop2\presets\</code> or a subdirectory.</li>
+<li>Press <strong>F8</strong> to jump to the preset directory and verify
+the path.</li>
+</ul>
+<h2 id="support">Support</h2>
+<ul>
+<li><strong>Hydrogenaudio Forum</strong>: <a
+href="https://hydrogenaudio.org/index.php/topic,125418.0.html">hydrogenaudio.org</a></li>
+</ul>
+<footer class="doc-footer">
+  <a href="index.html">Return to Home</a>
+</footer>
+</body>
+</html>
