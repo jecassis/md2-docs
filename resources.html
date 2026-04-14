@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>RESOURCES</title>
+  <title>foo_vis_milk2 Resources Guide</title>
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -44,26 +44,37 @@ Resources</a>
 <li><a href="#getting-presets" id="toc-getting-presets">Getting
 Presets</a>
 <ul>
-<li><a href="#projectm-presets" id="toc-projectm-presets">projectM
-Presets</a></li>
+<li><a href="#projectm" id="toc-projectm">projectM</a></li>
 <li><a href="#milkdrop-3" id="toc-milkdrop-3">MilkDrop 3</a></li>
 <li><a href="#beatdrop" id="toc-beatdrop">BeatDrop</a></li>
-<li><a href="#community-presets" id="toc-community-presets">Community
-Presets</a></li>
+<li><a href="#community" id="toc-community">Community</a></li>
 </ul></li>
 <li><a href="#getting-textures" id="toc-getting-textures">Getting
 Textures</a></li>
+<li><a href="#troubleshooting"
+id="toc-troubleshooting">Troubleshooting</a>
+<ul>
+<li><a href="#black-screen--no-visuals"
+id="toc-black-screen--no-visuals">Black screen / no visuals</a></li>
+<li><a href="#no-audio-response" id="toc-no-audio-response">No audio
+response</a></li>
+<li><a href="#presets-not-working-correctly"
+id="toc-presets-not-working-correctly">Presets not working
+correctly</a></li>
+<li><a href="#visualizer-wont-start"
+id="toc-visualizer-wont-start">Visualizer won't start</a></li>
+<li><a href="#presets-not-showing-up"
+id="toc-presets-not-showing-up">Presets not showing up</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </nav>
 <h1 id="foo_vis_milk2-resources"><code>foo_vis_milk2</code>
 Resources</h1>
 <p><code>foo_vis_milk2</code> uses <code>.milk</code> preset files and
-texture images to generate visuals. The component creates the
-<code>milkdrop2\presets\</code> and <code>milkdrop2\textures\</code>
-directories automatically under your foobar2000 profile.</p>
+texture images to generate visuals.</p>
 <h2 id="getting-presets">Getting Presets</h2>
-<h3 id="projectm-presets">projectM Presets</h3>
+<h3 id="projectm">projectM</h3>
 <p>The <a
 href="https://github.com/projectM-visualizer/projectm">projectM</a>
 project maintains a large collection of MilkDrop-compatible presets:</p>
@@ -80,7 +91,7 @@ content.</p>
 <p>Likewise, the <a
 href="https://github.com/OfficialIncubo/BeatDrop-Music-Visualizer">BeatDrop</a>
 project maintains a collection of MilkDrop presets and textures.</p>
-<h3 id="community-presets">Community Presets</h3>
+<h3 id="community">Community</h3>
 <p>The MilkDrop preset community has been active for over 20 years.
 Additional presets can be found at:</p>
 <!--- [Butterchurn preset explorer](https://butterchurnviz.com/) — browse presets in the browser (WebGL MilkDrop port)-->
@@ -99,6 +110,43 @@ texture set.</p>
 <strong>TGA</strong>, <strong>DDS</strong> texture formats</li>
 <li>See the <a href="textures.html">Textures Guide</a> for details on
 texture loading and configuration</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="black-screen--no-visuals">Black screen / no visuals</h3>
+<ul>
+<li>Ensure your GPU supports DirectX 11.1.</li>
+<li>Update your graphics drivers to the latest version.</li>
+<li>Press <strong>SPACE</strong> to load a different preset — some
+presets may fail to compile on certain GPUs.</li>
+</ul>
+<h3 id="no-audio-response">No audio response</h3>
+<ul>
+<li>Make sure music is playing in foobar2000.</li>
+<li>The visualizer receives audio directly from foobar2000's playback
+pipeline — no audio routing is needed.</li>
+</ul>
+<h3 id="presets-not-working-correctly">Presets not working
+correctly</h3>
+<ul>
+<li>Some older presets may use expression syntax that is not accepted by
+the active evaluator. Check preset equation sections and update
+deprecated constructs if compilation fails.</li>
+<li>Shader Model 4.0 minimum may cause some very old presets to render
+differently.</li>
+</ul>
+<h3 id="visualizer-wont-start">Visualizer won't start</h3>
+<ul>
+<li>Ensure foobar2000 v2.0 or later is installed.</li>
+<li>Try removing and re-adding the visualization panel.</li>
+<li>Check the foobar2000 console (<strong>View &gt; Console</strong>)
+for error messages.</li>
+</ul>
+<h3 id="presets-not-showing-up">Presets not showing up</h3>
+<ul>
+<li>Presets must be <code>.milk</code> or <code>.milk2</code> files
+placed inside <code>milkdrop2\presets\</code> or a subdirectory.</li>
+<li>Press <strong>F8</strong> to jump to the preset directory and verify
+the path.</li>
 </ul>
 <!--## Adding Presets
 

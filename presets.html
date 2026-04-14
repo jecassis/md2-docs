@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>PRESETS</title>
+  <title>foo_vis_milk2 Presets Guide</title>
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -520,10 +520,10 @@ _c4     = (.x = bass_att, .y = mid_att, .z = treb_att, .w = vol_att)
 _c5     = (.xy = blur1 scale+bias, .zw = blur2 scale+bias)
 _c6     = (.x = blur3 scale, .y = blur3 bias, .z = blur1_min, .w = blur1_max)
 _c7     = texsize (.x = width, .y = height, .z = 1/width, .w = 1/height)
-_c8     = roam_cos ~= 0.5 + 0.5*cos(time * float4(~0.3, ~1.3, ~5, ~20))
-_c9     = roam_sin ~= same, but using sin()
-_c10    = slow_roam_cos ~= 0.5 + 0.5*cos(time * float4(~0.005, ~0.008, ~0.013, ~0.022))
-_c11    = slow_roam_sin ~= same, but using sin()
+_c8     = roam_cos ~= 0.5 + 0.5 * cos(time * float4(~0.3, ~1.3, ~5, ~20))
+_c9     = roam_sin ~= 0.5 + 0.5 * sin(time * float4(~0.3, ~1.3, ~5, ~20))
+_c10    = slow_roam_cos ~= 0.5 + 0.5 * cos(time * float4(~0.005, ~0.008, ~0.013, ~0.022))
+_c11    = slow_roam_sin ~= 0.5 + 0.5 * sin(time * float4(~0.005, ~0.008, ~0.013, ~0.022))
 _c12    = (.x = mip_x, .y = mip_y, .z = mip_avg, .w = unused)
 _c13    = (.x = blur2_min, .y = blur2_max, .z = blur3_min, .w = blur3_max)</code></pre>
 <p>Additional constants for <code>foo_vis_milk2</code>:</p>
@@ -740,6 +740,8 @@ DX11 IEEE 754 rules. The replacement is done during shader assembly (in
 with <code>1e-30</code> to prevent <code>0/0 → NaN</code> and
 <code>x/0 → Infinity</code>. Division wrapping is applied during shader
 compilation when <code>_safe_denom</code> is not already present.</p>
+<p>Note: these compatibility functions can be disabled in Advanced
+preferences by turning off <strong>Fix legacy shaders</strong>.</p>
 <h3 id="texture-lookup-aliases">Texture Lookup Aliases</h3>
 <p>Case-insensitive texture lookup aliases:</p>
 <pre class="hlsl"><code>tex1d     → tex1D

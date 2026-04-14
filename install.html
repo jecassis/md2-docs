@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>INSTALL</title>
+  <title>foo_vis_milk2 Installation Guide</title>
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -58,21 +58,6 @@ id="toc-configuration">Configuration</a></li>
 Presets</a></li>
 <li><a href="#updating" id="toc-updating">Updating</a></li>
 <li><a href="#uninstalling" id="toc-uninstalling">Uninstalling</a></li>
-<li><a href="#troubleshooting"
-id="toc-troubleshooting">Troubleshooting</a>
-<ul>
-<li><a href="#black-screen--no-visuals"
-id="toc-black-screen--no-visuals">Black screen / no visuals</a></li>
-<li><a href="#no-audio-response" id="toc-no-audio-response">No audio
-response</a></li>
-<li><a href="#presets-not-working-correctly"
-id="toc-presets-not-working-correctly">Presets not working
-correctly</a></li>
-<li><a href="#visualizer-wont-start"
-id="toc-visualizer-wont-start">Visualizer won't start</a></li>
-<li><a href="#presets-not-showing-up"
-id="toc-presets-not-showing-up">Presets not showing up</a></li>
-</ul></li>
 <li><a href="#support" id="toc-support">Support</a></li>
 </ul></li>
 </ul>
@@ -87,12 +72,11 @@ recommended)</li>
 <li><strong>Host</strong>: <a
 href="https://www.foobar2000.org/download">foobar2000</a> v2.0 or
 later</li>
-<li><strong>Disk</strong>: ~1 MB for the component; add preset packs as
-needed (see <a href="resources.html">Resources Guide</a>)</li>
+<li><strong>Disk</strong>: ~1.5 MB for the component; add presets and
+textures/sprites as needed (see <a href="resources.html">Resources
+Guide</a>)</li>
 </ul>
-<p>No additional runtime libraries are required. Some features such as
-hybrid graphics, high DPI displays, and HDR may require a newer DXGI
-version than what is installed on the system.</p>
+<p>No additional runtime libraries are required.</p>
 <h2 id="download">Download</h2>
 <p>Download the latest <code>foo_vis_milk2.fb2k-component</code> from
 the <a
@@ -122,12 +106,15 @@ entries are created outside of foobar2000's configuration.</p>
 <li>Right-click on a panel area.</li>
 <li>Select <strong>MilkDrop 2</strong> from the available panels.</li>
 </ol>
-<p>On first run, the component creates the required directories under
-your foobar2000 profile:</p>
+<p>On first run, the component initializes its base profile
+directory:</p>
 <ul>
-<li><code>milkdrop2\presets\</code> — Preset directory</li>
-<li><code>milkdrop2\textures\</code> — Texture files</li>
+<li><code>milkdrop2\</code> — Base directory</li>
+<li><code>milkdrop2\data\</code> — Bundled shader include files</li>
 </ul>
+<p>Create <code>milkdrop2\presets\</code> and
+<code>milkdrop2\textures\</code> yourself (or extract a preset pack that
+includes them).</p>
 <p>Play some music and the visualizer responds automatically.</p>
 <p><strong>Essential shortcuts:</strong></p>
 <table>
@@ -233,43 +220,6 @@ updates.</p>
 <strong>Remove</strong>.</li>
 <li>Restart foobar2000.</li>
 </ol>
-<h2 id="troubleshooting">Troubleshooting</h2>
-<h3 id="black-screen--no-visuals">Black screen / no visuals</h3>
-<ul>
-<li>Ensure your GPU supports DirectX 11.1.</li>
-<li>Update your graphics drivers to the latest version.</li>
-<li>Press <strong>SPACE</strong> to load a different preset — some
-presets may fail to compile on certain GPUs.</li>
-</ul>
-<h3 id="no-audio-response">No audio response</h3>
-<ul>
-<li>Make sure music is playing in foobar2000.</li>
-<li>The visualizer receives audio directly from foobar2000's playback
-pipeline — no audio routing is needed.</li>
-</ul>
-<h3 id="presets-not-working-correctly">Presets not working
-correctly</h3>
-<ul>
-<li>Some older presets may use expression syntax that is not accepted by
-the active evaluator. Check preset equation sections and update
-deprecated constructs if compilation fails.</li>
-<li>Shader Model 4.0 minimum may cause some very old presets to render
-differently.</li>
-</ul>
-<h3 id="visualizer-wont-start">Visualizer won't start</h3>
-<ul>
-<li>Ensure foobar2000 v2.0 or later is installed.</li>
-<li>Try removing and re-adding the visualization panel.</li>
-<li>Check the foobar2000 console (<strong>View &gt; Console</strong>)
-for error messages.</li>
-</ul>
-<h3 id="presets-not-showing-up">Presets not showing up</h3>
-<ul>
-<li>Presets must be <code>.milk</code> or <code>.milk2</code> files
-placed inside <code>milkdrop2\presets\</code> or a subdirectory.</li>
-<li>Press <strong>F8</strong> to jump to the preset directory and verify
-the path.</li>
-</ul>
 <h2 id="support">Support</h2>
 <ul>
 <li><strong>Hydrogenaudio Forum</strong>: <a

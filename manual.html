@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>MANUAL</title>
+  <title>foo_vis_milk2 Manual</title>
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -132,6 +132,8 @@ Playback</a></li>
 <li><a href="#mouse-and-context-menu"
 id="toc-mouse-and-context-menu">Mouse and Context Menu</a>
 <ul>
+<li><a href="#file-drag-and-drop" id="toc-file-drag-and-drop">File Drag
+and Drop</a></li>
 <li><a href="#context-menu-commands"
 id="toc-context-menu-commands">Context Menu Commands</a></li>
 </ul></li>
@@ -182,6 +184,9 @@ Scheduling</a></li>
 id="toc-multichannel-mixing">Multichannel Mixing</a></li>
 <li><a href="#audio-analysis-1" id="toc-audio-analysis-1">Audio
 Analysis</a></li>
+<li><a href="#playback-transport-behavior"
+id="toc-playback-transport-behavior">Playback Transport
+Behavior</a></li>
 <li><a href="#preset-audio-variables"
 id="toc-preset-audio-variables">Preset Audio Variables</a></li>
 </ul></li>
@@ -262,12 +267,9 @@ Releases</a>.</li>
 layout. Right-click a panel and select <strong>Visualizations &gt;
 MilkDrop 2</strong> to add it.</li>
 </ol>
-<p>Once running, the visualizer receives audio directly from
-foobar2000's playback pipeline as floating-point
-<code>audio_sample</code> values. In practice this is
-architecture-dependent: <strong>x86 uses 32-bit float</strong>, while
-<strong>x64, ARM64, and ARM64EC use 64-bit double</strong>. Play music
-and visuals respond automatically.</p>
+<p>Once running, the visualizer receives audio and metadata directly
+from foobar2000's playback pipeline. Play music and visuals respond
+automatically.</p>
 <p>Press <strong>F1</strong> for the built-in help overlay.</p>
 <h2 id="system-requirements">System Requirements</h2>
 <ul>
@@ -684,6 +686,20 @@ active)</td>
 </tr>
 </tbody>
 </table>
+<h3 id="file-drag-and-drop">File Drag and Drop</h3>
+<p>You can drag and drop exactly one file onto the visualization window
+at a time:</p>
+<ul>
+<li><code>.milk</code> or <code>.milk2</code>: loads the dropped
+preset.</li>
+<li>Supported image files: launches the dropped image as a runtime
+sprite.</li>
+</ul>
+<p>Supported image extensions for drag and drop are: <code>.png</code>,
+<code>.jpg</code>, <code>.dds</code>, <code>.bmp</code>,
+<code>.tga</code>, <code>.jpeg</code>, <code>.jfif</code>,
+<code>.dib</code>, <code>.tiff</code>, <code>.tif</code>,
+<code>.webp</code>, <code>.gif</code>, and <code>.avif</code>.</p>
 <h3 id="context-menu-commands">Context Menu Commands</h3>
 <p>Right-clicking the visualization (or pressing the Context Menu key)
 opens a popup menu with runtime controls.</p>
@@ -874,6 +890,104 @@ trigger hard cuts more easily.</td>
 </tr>
 </tbody>
 </table>
+<h4 id="hard-cut-modes-f11--shiftf11">Hard-Cut Modes (F11 /
+SHIFT+F11)</h4>
+<p>Press <strong>F11</strong> (or <strong>SHIFT+F11</strong> to go
+backward) to cycle hard-cut modes.</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Name (OSD)</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Off</td>
+<td>Disables beat-triggered preset changes.</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Normal</td>
+<td>Adaptive loudness-based hard cuts. Uses combined bass/mid/treble
+energy and performs an instant random preset cut when the threshold is
+exceeded.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Bass Blend</td>
+<td>Bass-triggered next-preset blend (~0.95s), rate-limited to about
+1.0s between triggers.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Bass</td>
+<td>Bass-triggered instant hard cut to next preset.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Middle</td>
+<td>Midrange-triggered instant hard cut to next preset.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Treble</td>
+<td>Treble-triggered instant hard cut to next preset.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Bass Fast Blend</td>
+<td>Bass-triggered fast blend (~0.4s), rate-limited to about 0.5s
+between triggers.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Treble Fast Blend</td>
+<td>Treble-triggered fast blend (~0.4s), rate-limited to about 0.5s
+between triggers.</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Bass Blend and Treble Hard Cut</td>
+<td>Bass causes a short blend (~0.24s) while treble causes an instant
+hard cut; each trigger path is rate-limited to about 0.48s.</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Rhythmic</td>
+<td>Bass or treble triggers an instant hard cut, rate-limited to about
+0.23s.</td>
+</tr>
+<tr>
+<td>10</td>
+<td>2 Beats</td>
+<td>Strong bass beat detection; hard cut on every second detected
+beat.</td>
+</tr>
+<tr>
+<td>11</td>
+<td>4 Beats</td>
+<td>Strong bass beat detection; hard cut on every fourth detected
+beat.</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Kinetronix (Vizikord)</td>
+<td>Strong bass beat detection; alternates next/previous preset each
+beat, plus periodic extra next-preset jumps.</td>
+</tr>
+</tbody>
+</table>
+<p>Notes:</p>
+<ul>
+<li>Modes <strong>2-12</strong> use mode-specific beat triggers and
+internal thresholds.</li>
+<li>The <strong>Time between hard cuts</strong> and <strong>Hard cut
+loudness threshold</strong> settings primarily affect <strong>Mode 1
+(Normal)</strong> behavior.</li>
+</ul>
 <h3 id="song-title-and-messages">Song Title and Messages</h3>
 <table>
 <thead>
@@ -1460,6 +1574,15 @@ for rendering)</li>
 <li><strong>Frequency bands</strong>: Bass, mid, and treble with both
 immediate and attack-smoothed values</li>
 </ul>
+<h3 id="playback-transport-behavior">Playback Transport Behavior</h3>
+<ul>
+<li><strong>Playing</strong>: waveform data is updated from the
+visualization stream as usual.</li>
+<li><strong>Paused</strong>: the last waveform is held steady (no
+decay), so visuals do not jump when pausing.</li>
+<li><strong>Stopped</strong>: waveform buffers decay smoothly toward
+silence instead of snapping to zero.</li>
+</ul>
 <h3 id="preset-audio-variables">Preset Audio Variables</h3>
 <table>
 <thead>
@@ -1734,19 +1857,19 @@ double)</td>
 <h3 id="example">Example</h3>
 <div class="sourceCode" id="cb2"><pre
 class="sourceCode ini"><code class="sourceCode ini"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[font00]</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">  face</span><span class="ot">=</span><span class="st">arial</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">  bold</span><span class="ot">=</span><span class="dv">1</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dt">  ital</span><span class="ot">=</span><span class="dv">0</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">face</span><span class="ot">=</span><span class="st">arial</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">bold</span><span class="ot">=</span><span class="dv">1</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dt">ital</span><span class="ot">=</span><span class="dv">0</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">[message00]</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="dt">  text</span><span class="ot">=</span><span class="st">This is a test...</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="dt">  font</span><span class="ot">=</span><span class="dv">0</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="dt">  fade</span><span class="ot">=</span><span class="fl">0.4</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="dt">  time</span><span class="ot">=</span><span class="fl">1.2</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="dt">  size</span><span class="ot">=</span><span class="dv">50</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="dt">  growth</span><span class="ot">=</span><span class="fl">2.0</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="dt">  x</span><span class="ot">=</span><span class="fl">0.5</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="dt">  y</span><span class="ot">=</span><span class="fl">0.2</span></span></code></pre></div>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="dt">text</span><span class="ot">=</span><span class="st">This is a test...</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="dt">font</span><span class="ot">=</span><span class="dv">0</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="dt">fade</span><span class="ot">=</span><span class="fl">0.4</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="dt">time</span><span class="ot">=</span><span class="fl">1.2</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="dt">size</span><span class="ot">=</span><span class="dv">50</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="dt">growth</span><span class="ot">=</span><span class="fl">2.0</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="dt">x</span><span class="ot">=</span><span class="fl">0.5</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="dt">y</span><span class="ot">=</span><span class="fl">0.2</span></span></code></pre></div>
 <h2 id="sprites">Sprites</h2>
 <p>Sprites are animated image overlays managed via
 <code>milk2_img.ini</code> (located in <code>milkdrop2\</code>). Each
@@ -2125,10 +2248,12 @@ color.</p>
 <p>Presets can reference embedded sprites that load automatically when
 the preset is active. Toggle auto-loading with
 <strong>CTRL+L</strong>.</p>
+<p>Auto-load compatibility is enabled for <code>.milk2</code> presets
+and for compatible MilkDrop 3 preset states.</p>
 <h3 id="example-1">Example</h3>
 <div class="sourceCode" id="cb4"><pre
 class="sourceCode ini"><code class="sourceCode ini"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[img04]</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dt">desc</span><span class="ot">=</span><span class="st">&quot;an object drifts across the screen periodically&quot;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dt">desc</span><span class="ot">=</span><span class="st">&quot;An object drifts across the screen periodically.&quot;</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dt">img</span><span class="ot">=</span><span class="st">textures\smalltiled_electric_nebula.jpg</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="dt">init_1</span><span class="ot">=</span><span class="st">blendmode = 3;</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="dt">init_2</span><span class="ot">=</span><span class="st">x = -100;</span></span>
