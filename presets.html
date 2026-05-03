@@ -457,6 +457,11 @@ textures can fall back differently than in DX9.</li>
 <li><strong>Check for HLSL variable shadowing and compiler-fix side
 effects.</strong> <code>foo_vis_milk2</code> may rename symbols that
 shadow built-in functions.</li>
+<li><strong>Compare behavior across driver versions and GPU
+vendors.</strong> Small differences in transcendental evaluation (for
+example <code>sin</code>, <code>cos</code>, <code>atan</code>,
+<code>pow</code>, <code>exp</code>, <code>log</code>) can accumulate
+through the feedback path and produce visible divergence.</li>
 </ol>
 <h3 id="shapes-wrong-size">Shapes Wrong Size</h3>
 <ol type="1">
@@ -471,11 +476,15 @@ Workflow</h3>
 <li>In <strong>Advanced &gt; Visualization &gt; MilkDrop 2</strong>,
 turn <strong>Debug output</strong> on to dump shader source to
 <code>milkdrop2\debug\</code>.</li>
-<li>Reproduce the issue and inspect dumped warp/comp shader text.</li>
+<li>Reproduce the issue and inspect dumped warp/comp shader
+source/disassembly.</li>
 <li>Toggle <strong>Fix legacy shaders</strong> off to isolate whether a
 compatibility rewrite is involved.</li>
 <li>Enable <strong>Treat shader warnings as errors</strong> for strict
 compile mode (<code>/WX</code> equivalent) during investigation.</li>
+<li>Finally, try <strong>WARP</strong> to isolate issues between
+MilkDrop and the GPU/driver. To enable unconditionally, set
+<code>MILK2_FORCE_WARP</code> environment variable to 1.</li>
 </ol>
 <h3
 id="fxc-equivalent-compile-commands-used-by-foo_vis_milk2">FXC-Equivalent
@@ -744,10 +753,10 @@ compilation when <code>_safe_denom</code> is not already present.</p>
 preferences by turning off <strong>Fix legacy shaders</strong>.</p>
 <h3 id="texture-lookup-aliases">Texture Lookup Aliases</h3>
 <p>Case-insensitive texture lookup aliases:</p>
-<pre class="hlsl"><code>tex1d     → tex1D
-tex2d     → tex2D
-tex3d     → tex3D
-texcube   → texCUBE</code></pre>
+<pre class="hlsl"><code>tex1d   → tex1D
+tex2d   → tex2D
+tex3d   → tex3D
+texcube → texCUBE</code></pre>
 <hr />
 <h2 id="sampler-register-map">Sampler Register Map</h2>
 <p>Up to 16 sampler slots are available:</p>

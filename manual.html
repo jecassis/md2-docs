@@ -194,6 +194,9 @@ id="toc-preset-audio-variables">Preset Audio Variables</a></li>
 <ul>
 <li><a href="#using-messages-at-runtime"
 id="toc-using-messages-at-runtime">Using Messages at Runtime</a></li>
+<li><a href="#fortune-slot-message99"
+id="toc-fortune-slot-message99">Fortune Slot
+(<code>message99</code>)</a></li>
 <li><a href="#file-format" id="toc-file-format">File Format</a></li>
 <li><a href="#font-definitions" id="toc-font-definitions">Font
 Definitions</a></li>
@@ -462,6 +465,11 @@ Presets Only)</h3>
 <tr>
 <td>@</td>
 <td>Randomize composite shader</td>
+</tr>
+<tr>
+<td>CTRL+A</td>
+<td>Arm one-shot shader disassembly dump for next warp/comp shader
+compile</td>
 </tr>
 <tr>
 <td>CTRL+D</td>
@@ -776,6 +784,8 @@ fullscreen.</td>
 </tr>
 </tbody>
 </table>
+<p>Menu command descriptions can be toggled in Advanced Preferences via
+<strong>Context menu descriptions</strong>.</p>
 <h2 id="preferences">Preferences</h2>
 <p>Open <strong>File &gt; Preferences &gt; Visualization &gt; MilkDrop
 2</strong> to configure the component. Settings are stored in
@@ -1209,7 +1219,9 @@ corner of the screen.</td>
 <td>Preset directory</td>
 <td><em>(empty)</em></td>
 <td>Override the default preset directory path. When empty, uses
-<code>milkdrop2\presets\</code>.</td>
+<code>milkdrop2\presets\</code>. Supports
+<code>%fb2k_profile_path%</code> and environment-variable
+expansion.</td>
 </tr>
 <tr>
 <td>Fix legacy shaders</td>
@@ -1232,10 +1244,30 @@ development.</td>
 <code>milkdrop2\cache\</code> when foobar2000 exits.</td>
 </tr>
 <tr>
+<td>Fortune executable</td>
+<td><em>(empty)</em></td>
+<td>Optional external command used to generate dynamic text for message
+slot <code>99</code>.</td>
+</tr>
+<tr>
+<td>Fortune arguments</td>
+<td><em>(empty)</em></td>
+<td>Optional argument string passed to <strong>Fortune
+executable</strong>. Environment variables are expanded before
+launch.</td>
+</tr>
+<tr>
+<td>Context menu descriptions</td>
+<td>On</td>
+<td>Enable descriptive text for context-menu commands in Default
+UI.</td>
+</tr>
+<tr>
 <td>Debug output</td>
 <td>Off</td>
-<td>Emit additional diagnostic messages (console). Shader source dumps
-are armed separately with <strong>CTRL+D</strong> and written to
+<td>Emit additional diagnostic messages (console). Shader dumps are
+armed separately with <strong>CTRL+D</strong> (source) and
+<strong>CTRL+A</strong> (disassembly) and written to
 <code>milkdrop2\debug\</code>.</td>
 </tr>
 </tbody>
@@ -1632,6 +1664,20 @@ start over.</li>
 <li>Press <strong>F7</strong> (while in message mode) to reload
 <code>milk2_msg.ini</code> from disk without restarting.</li>
 </ol>
+<h3 id="fortune-slot-message99">Fortune Slot
+(<code>message99</code>)</h3>
+<ul>
+<li>Slot <code>99</code> can be used as a dynamic "fortune" message
+style.</li>
+<li>When <strong>Fortune executable</strong> is configured, launching
+message <code>99</code> replaces its text with captured process
+output.</li>
+<li>If the external command is unavailable or returns no usable text,
+<code>message99</code> from <code>milk2_msg.ini</code> is used as
+fallback.</li>
+<li>Fortune-style messages support multi-line wrapping for longer
+text.</li>
+</ul>
 <h3 id="file-format">File Format</h3>
 <p>Both <code>milk2_msg.ini</code> and <code>milk2_img.ini</code> are
 parsed by the Windows <a
@@ -2569,8 +2615,9 @@ the <code>WM_MILK2</code> window message for external control:</p>
 </tr>
 <tr>
 <td><code>milkdrop2\debug\</code></td>
-<td>Shader source dumps for debugging
-(<code>{preset}_{type}_{fn}_{profile}.hlsl</code>)</td>
+<td>Shader dumps for debugging
+(<code>{preset}_{type}_{fn}_{profile}.hlsl</code> and
+<code>.asm</code>)</td>
 </tr>
 <tr>
 <td><code>milkdrop2\screenshots\</code></td>
