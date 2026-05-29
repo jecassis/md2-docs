@@ -105,16 +105,6 @@
 <li><a href="#foo_vis_milk2-manual"
 id="toc-foo_vis_milk2-manual"><code>foo_vis_milk2</code> Manual</a>
 <ul>
-<li><a href="#changes-since-v088-07825eb"
-id="toc-changes-since-v088-07825eb">Changes Since v0.8.8 (07825eb)</a>
-<ul>
-<li><a href="#new-capabilities" id="toc-new-capabilities">New
-Capabilities</a></li>
-<li><a href="#behavior-updates" id="toc-behavior-updates">Behavior
-Updates</a></li>
-<li><a href="#stability-fixes" id="toc-stability-fixes">Stability
-Fixes</a></li>
-</ul></li>
 <li><a href="#getting-started" id="toc-getting-started">Getting
 Started</a></li>
 <li><a href="#system-requirements" id="toc-system-requirements">System
@@ -268,38 +258,6 @@ component for foobar2000, based on the MilkDrop 2 engine. It renders
 real-time visual effects driven by audio input, using HLSL shaders and a
 per-frame expression evaluation system. <code>foo_vis_milk2</code>
 supports x86, x64, ARM64 and ARM64EC architectures.</p>
-<h2 id="changes-since-v088-07825eb">Changes Since v0.8.8 (07825eb)</h2>
-<h3 id="new-capabilities">New Capabilities</h3>
-<ul>
-<li>Added named pipe remote control via <strong>Enable remote
-control</strong> in Advanced Preferences.</li>
-<li>Added drag-and-drop support for <code>.wave</code> and
-<code>.shape</code> files to import custom waves/shapes into the running
-preset.</li>
-<li>Routed interactive operations through a render command queue to
-improve thread-safety for keyboard, mouse, and remote-control
-actions.</li>
-</ul>
-<h3 id="behavior-updates">Behavior Updates</h3>
-<ul>
-<li>In sequential mode, the initial startup pick is randomized once,
-then playback continues in sequential order.</li>
-<li>Preset rename preserves the original file extension
-(<code>.milk</code> or <code>.milk2</code>) and clamps name length to
-remain <code>MAX_PATH</code> safe.</li>
-<li>Exiting mashup mode applies pending slot selections and shows a
-warning that mixed preset code may differ after save/reload.</li>
-<li>Playback metadata is synchronized immediately after successful
-visualization initialization.</li>
-</ul>
-<h3 id="stability-fixes">Stability Fixes</h3>
-<ul>
-<li>Added guards for invalid EEL VM context reset/deallocation.</li>
-<li>Added guards to avoid shader constant-table crashes during shader
-updates.</li>
-<li>Added runtime-availability guards for preset-list/config
-synchronization during teardown and no-op rebuild paths.</li>
-</ul>
 <h2 id="getting-started">Getting Started</h2>
 <ol type="1">
 <li>Install <a href="https://www.foobar2000.org/download">foobar2000</a>
