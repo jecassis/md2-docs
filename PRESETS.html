@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>foo_vis_milk2 Presets Guide</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="pandoc-docs.css" />
+</head>
+<body>
+<nav class="doc-nav" aria-label="Documentation navigation">
+  <a href="index.html">Home</a>
+  <a href="install.html">Install</a>
+  <a href="manual.html">Manual</a>
+  <a href="presets.html">Presets</a>
+  <a href="textures.html">Textures</a>
+  <a href="resources.html">Resources</a>
+</nav>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#foo_vis_milk2-preset-debugging-guide"
+id="toc-foo_vis_milk2-preset-debugging-guide"><code>foo_vis_milk2</code>
+Preset Debugging Guide</a>
+<ul>
+<li><a href="#rendering-pipeline-overview"
+id="toc-rendering-pipeline-overview">Rendering Pipeline
+Overview</a></li>
+<li><a href="#shader-wrapping" id="toc-shader-wrapping">Shader
+Wrapping</a>
+<ul>
+<li><a href="#defines" id="toc-defines">Defines</a></li>
+<li><a href="#firstlast-lines" id="toc-firstlast-lines">First/Last
+Lines</a></li>
+</ul></li>
+<li><a href="#milk-file-format-backtick-prefix-on-shader-lines"
+id="toc-milk-file-format-backtick-prefix-on-shader-lines"><code>.milk</code>
+File Format: Backtick Prefix on Shader Lines</a></li>
+<li><a href="#dx9-to-dx11-ieee-754-differences"
+id="toc-dx9-to-dx11-ieee-754-differences">DX9 to DX11 IEEE 754
+Differences</a>
+<ul>
+<li><a href="#hlsl-language-fixes" id="toc-hlsl-language-fixes">HLSL
+Language Fixes</a></li>
+</ul></li>
+<li><a href="#audio-data-path" id="toc-audio-data-path">Audio Data
+Path</a>
+<ul>
+<li><a href="#float-samples-from-foobar2000"
+id="toc-float-samples-from-foobar2000">Float Samples from
+foobar2000</a></li>
+</ul></li>
+<li><a href="#custom-shape-rendering"
+id="toc-custom-shape-rendering">Custom Shape Rendering</a>
+<ul>
+<li><a href="#shapes" id="toc-shapes">Shapes</a></li>
+<li><a href="#waveforms" id="toc-waveforms">Waveforms</a></li>
+</ul></li>
+<li><a href="#common-debugging-scenarios"
+id="toc-common-debugging-scenarios">Common Debugging Scenarios</a>
+<ul>
+<li><a href="#colors-wrong" id="toc-colors-wrong">Colors Wrong</a></li>
+<li><a href="#preset-works-in-milkdrop-2-dx9-but-not-foo_vis_milk2-dx11"
+id="toc-preset-works-in-milkdrop-2-dx9-but-not-foo_vis_milk2-dx11">Preset
+Works in MilkDrop 2 (DX9) but not <code>foo_vis_milk2</code>
+(DX11)</a></li>
+<li><a href="#shapes-wrong-size" id="toc-shapes-wrong-size">Shapes Wrong
+Size</a></li>
+<li><a href="#recommended-advanced-debug-workflow"
+id="toc-recommended-advanced-debug-workflow">Recommended Advanced Debug
+Workflow</a></li>
+<li><a href="#fxc-equivalent-compile-commands-used-by-foo_vis_milk2"
+id="toc-fxc-equivalent-compile-commands-used-by-foo_vis_milk2">FXC-Equivalent
+Compile Commands Used by <code>foo_vis_milk2</code></a></li>
+</ul></li>
+<li><a href="#key-constants-reference"
+id="toc-key-constants-reference">Key Constants Reference</a>
+<ul>
+<li><a href="#constant-buffers" id="toc-constant-buffers">Constant
+Buffers</a></li>
+<li><a href="#random-values" id="toc-random-values">Random
+Values</a></li>
+<li><a href="#q-variables-eel--shader-bridge"
+id="toc-q-variables-eel--shader-bridge">Q Variables (EEL ↔︎ Shader
+Bridge)</a></li>
+<li><a href="#rotation-matrices" id="toc-rotation-matrices">Rotation
+Matrices</a></li>
+<li><a href="#predefined-macros" id="toc-predefined-macros">Predefined
+Macros</a></li>
+<li><a href="#texture-helper-macros"
+id="toc-texture-helper-macros">Texture Helper Macros</a></li>
+<li><a href="#audio-texture-macros" id="toc-audio-texture-macros">Audio
+Texture Macros</a></li>
+<li><a href="#safe-intrinsic-wrappers"
+id="toc-safe-intrinsic-wrappers">Safe Intrinsic Wrappers</a></li>
+<li><a href="#texture-lookup-aliases"
+id="toc-texture-lookup-aliases">Texture Lookup Aliases</a></li>
+</ul></li>
+<li><a href="#sampler-register-map"
+id="toc-sampler-register-map">Sampler Register Map</a>
+<ul>
+<li><a href="#previous-frame-image-samplers"
+id="toc-previous-frame-image-samplers">Previous-Frame Image
+Samplers</a></li>
+<li><a href="#built-in-noise-samplers"
+id="toc-built-in-noise-samplers">Built-in Noise Samplers</a></li>
+<li><a href="#blur-samplers" id="toc-blur-samplers">Blur
+Samplers</a></li>
+<li><a href="#audio-samplers" id="toc-audio-samplers">Audio
+Samplers</a></li>
+</ul></li>
+<li><a href="#preset-fix-notes" id="toc-preset-fix-notes">Preset Fix
+Notes</a>
+<ul>
+<li><a href="#martin---lonely-goosemilk"
+id="toc-martin---lonely-goosemilk"><em>martin - lonely
+goose.milk</em></a></li>
+<li><a href="#nivush---torusmilk" id="toc-nivush---torusmilk"><em>Nivush
+- Torus.milk</em></a></li>
+<li><a href="#martin---massif-central--x-x-x-y-y-z-z-milk"
+id="toc-martin---massif-central--x-x-x-y-y-z-z-milk"><em>martin - Massif
+Central -x-x-x-y-y-z-z-.milk</em></a></li>
+<li><a href="#milkdrop2077-vs-martin---infinity-2milk"
+id="toc-milkdrop2077-vs-martin---infinity-2milk"><em>MilkDrop2077 vs
+martin - infinity 2.milk</em></a></li>
+<li><a href="#illusion--rovastar---clouded-bottlemilk"
+id="toc-illusion--rovastar---clouded-bottlemilk"><em>Illusion &amp;
+Rovastar - Clouded Bottle.milk</em></a></li>
+<li><a href="#martin--se7enslasher---the-sewers-random-texture-editmilk"
+id="toc-martin--se7enslasher---the-sewers-random-texture-editmilk"><em>martin
++ Se7enSlasher - the sewers (random texture edit).milk</em></a></li>
+<li><a href="#xordev---milkdrop2077---black-holemilk"
+id="toc-xordev---milkdrop2077---black-holemilk"><em>XorDev -
+MilkDrop2077 - Black hole.milk</em></a></li>
+<li><a href="#xordev---milkdrop2077---black-hole4milk"
+id="toc-xordev---milkdrop2077---black-hole4milk"><em>XorDev -
+MilkDrop2077 - Black hole4.milk</em></a></li>
+<li><a
+href="#hexcollie-tin-suksma-zylot-orb-n-flexi---blarffff-bubblemilk"
+id="toc-hexcollie-tin-suksma-zylot-orb-n-flexi---blarffff-bubblemilk"><em>Hexcollie,
+Ti@N, Suksma, Zylot, Orb n Flexi - Blarffff Bubble.milk</em></a></li>
+<li><a href="#milkdrop2077---martin---yellow-dots-and-wavesmilk"
+id="toc-milkdrop2077---martin---yellow-dots-and-wavesmilk"><em>MilkDrop2077
+- martin - Yellow Dots and Waves.milk</em></a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="foo_vis_milk2-preset-debugging-guide"><code>foo_vis_milk2</code>
+Preset Debugging Guide</h1>
+<p>Reference for debugging preset rendering differences between the
+original MilkDrop 2 (DirectX 9) and <code>foo_vis_milk2</code> (DirectX
+11.1).</p>
+<hr />
+<h2 id="rendering-pipeline-overview">Rendering Pipeline Overview</h2>
+<pre><code>VS[0] (previous frame)
+  |
+  v
+Warp Pass ──&gt; VS[1]       Reads VS[0], applies warp mesh distortion, writes VS[1]
+  |
+  v
+Blur Passes                Reads from frame, generates Gaussian blur levels
+  |
+  v
+Custom Shapes/Waves ──&gt; VS[1]   Drawn directly into VS[1] (alpha-blended)
+  |
+  v
+Comp Pass ──&gt; Backbuffer   Reads VS[1] + blur textures, applies comp shader</code></pre>
+<ul>
+<li><strong>VS[0] and VS[1] ping-pong</strong> each frame. After comp
+writes to backbuffer, VS[1] becomes VS[0] next frame.</li>
+<li><strong>Warp mesh</strong>: GridX × GridY vertices (default 48 × 36,
+configurable 32–192).</li>
+<li><strong>Composite mesh</strong>: Fixed 32 × 24 grid.</li>
+</ul>
+<hr />
+<h2 id="shader-wrapping">Shader Wrapping</h2>
+<p><code>foo_vis_milk2</code> assembles shader text by combining include
+headers + defines + the preset shader body + wrapping code.</p>
+<h3 id="defines">Defines</h3>
+<pre><code>Warp: #define uv _uv.xy / #define uv_orig _uv.zw  (float4 _uv : TEXCOORD0)
+Comp: #define uv _uv.xy / #define uv_orig _uv.xy  (float2 _uv : TEXCOORD0)</code></pre>
+<p>Note: comp uses <code>float2 _uv</code> (no zw), so
+<code>uv_orig</code> = <code>uv</code> by design.</p>
+<h3 id="firstlast-lines">First/Last Lines</h3>
+<pre class="hlsl"><code>// First line (both warp and comp):
+float3 ret = 0;
+
+// Last line:
+_return_value = float4(ret.xyz, _vDiffuse.w);</code></pre>
+<hr />
+<h2
+id="milk-file-format-backtick-prefix-on-shader-lines"><code>.milk</code>
+File Format: Backtick Prefix on Shader Lines</h2>
+<p>In <code>.milk</code> preset files, shader code is stored as numbered
+INI-style key=value lines:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode ini"><code class="sourceCode ini"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">warp_1</span><span class="ot">=</span><span class="st">`float3 ret = 0;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dt">warp_2</span><span class="ot">=</span><span class="st">`ret = tex2D(sampler_main, uv).xyz;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dt">comp_1</span><span class="ot">=</span><span class="st">`float3 ret = 0;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="dt">comp_2</span><span class="ot">=</span><span class="st">`ret = GetMain(uv);</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="dt">per_frame_1</span><span class="ot">=</span><span class="st">wave_r = 0.5 + 0.5*sin(time);</span></span></code></pre></div>
+<p>The leading backtick (<code>`</code>) on <code>warp_</code> and
+<code>comp_</code> lines is a legacy escape character. Original MilkDrop
+used the Windows <a
+href="https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-getprivateprofilestringw"><code>GetPrivateProfileString()</code></a>
+INI API, which treats <code>;</code> as a comment delimiter. Since HLSL
+shader lines contain semicolons, the backtick was prepended to prevent
+the INI parser from truncating lines at the first <code>;</code>.</p>
+<ul>
+<li><strong>On write</strong> (<code>WriteCode</code>): The backtick is
+always prepended to <code>warp_</code> and <code>comp_</code> shader
+lines. EEL expression lines (<code>per_frame_</code>,
+<code>per_pixel_</code>, etc.) are written without it.</li>
+<li><strong>On read</strong> (<code>ReadCode</code>): If the first
+character is a backtick, it is stripped (<code>&amp;szLine[1]</code>).
+If absent, the line is used as-is. Both forms are accepted.</li>
+<li><strong>EEL lines</strong>: Never use backticks.</li>
+</ul>
+<p>The backtick is <strong>optional on read but always written for
+backward compatibility</strong>.</p>
+<hr />
+<h2 id="dx9-to-dx11-ieee-754-differences">DX9 to DX11 IEEE 754
+Differences</h2>
+<p>The most common source of rendering differences between DX9-based
+MilkDrop and <code>foo_vis_milk2</code> is <strong>NaN
+propagation</strong>. DX9 hardware (especially NVIDIA) handled edge
+cases in non-standard ways, while DX11 follows IEEE 754 strictly.</p>
+<p><code>foo_vis_milk2</code> applies safe shader intrinsic wrappers to
+prevent NaN from entering the feedback loop:</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>DX9 Behavior</th>
+<th>DX11 Behavior</th>
+<th>Applied Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>normalize(0)</code></td>
+<td>Returns 0</td>
+<td>NaN</td>
+<td>Guard zero-length vectors</td>
+</tr>
+<tr>
+<td><code>sqrt(negative)</code></td>
+<td><code>sqrt(abs(x))</code> (positive)</td>
+<td>NaN</td>
+<td><code>sqrt(abs(x))</code> always positive</td>
+</tr>
+<tr>
+<td><code>log(x ≤ 0)</code></td>
+<td>Large negative</td>
+<td>-Infinity / NaN</td>
+<td>Clamp to tiny positive</td>
+</tr>
+<tr>
+<td><code>tan()</code> at poles</td>
+<td>Infinity × 0 = 0</td>
+<td>Infinity × 0 = NaN</td>
+<td>Clamp to large finite</td>
+</tr>
+<tr>
+<td><code>pow(negative, non-int)</code></td>
+<td><code>abs(x)^y</code> or 0</td>
+<td>NaN</td>
+<td>Guard negative bases</td>
+</tr>
+<tr>
+<td><code>asin</code>/<code>acos</code> outside [-1,1]</td>
+<td>Clamps internally</td>
+<td>NaN</td>
+<td>Clamp input range</td>
+</tr>
+<tr>
+<td><code>atan2(0, 0)</code></td>
+<td>Returns 0</td>
+<td>May return NaN</td>
+<td>Offset by epsilon</td>
+</tr>
+<tr>
+<td><code>0 / 0</code></td>
+<td>Returns 0</td>
+<td>NaN</td>
+<td>Replace zero denominators with epsilon</td>
+</tr>
+<tr>
+<td><code>x / 0</code></td>
+<td>±FLT_MAX</td>
+<td>±Infinity</td>
+<td>Replace zero denominators with epsilon</td>
+</tr>
+</tbody>
+</table>
+<h3 id="hlsl-language-fixes">HLSL Language Fixes</h3>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>DX9 Behavior</th>
+<th>DX11 Problem</th>
+<th>Fix Applied</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bool</code> as l-value</td>
+<td>Works freely</td>
+<td>X4555 error on assignment</td>
+<td>Convert to <code>int</code></td>
+</tr>
+<tr>
+<td>Double literals</td>
+<td>Implicit float</td>
+<td>Warning on narrowing</td>
+<td>Explicit <code>float</code> casts</td>
+</tr>
+<tr>
+<td>Variable self-shadowing</td>
+<td>Allowed</td>
+<td>Compilation error</td>
+<td>Rename conflicting variables</td>
+</tr>
+<tr>
+<td>User functions shadow builtins</td>
+<td>Allowed</td>
+<td>Undefined behavior</td>
+<td>Rename user identifiers</td>
+</tr>
+<tr>
+<td>Macro collisions</td>
+<td>Often tolerated</td>
+<td>Compile failure</td>
+<td>Auto-insert <code>#undef</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="audio-data-path">Audio Data Path</h2>
+<h3 id="float-samples-from-foobar2000">Float Samples from
+foobar2000</h3>
+<pre><code>foobar2000 float [-1.0, +1.0]
+  |
+  v
+Waveform buffer (576 samples, stereo)
+  |
+  v
+FFT (512 frequency bins)
+  |
+  v
+3-band analysis (bass, mid, treb)
+  |
+  v
+Available as EEL variables and shader constants</code></pre>
+<p>This differs from the original MilkDrop 2 which received 8-bit
+unsigned PCM from Winamp.</p>
+<hr />
+<h2 id="custom-shape-rendering">Custom Shape Rendering</h2>
+<h3 id="shapes">Shapes</h3>
+<ul>
+<li>Up to <strong>16 custom shapes</strong> per preset</li>
+<li>Each shape has init code, per-frame code, and per-vertex code (EEL
+expressions)</li>
+<li>Shapes are drawn into VS[1] with alpha or additive blending</li>
+</ul>
+<h3 id="waveforms">Waveforms</h3>
+<ul>
+<li>Up to <strong>16 custom waveforms</strong> per preset</li>
+<li>Spectrum mode available (<code>bSpectrum=1</code>)</li>
+<li>Drawing modes: lines, dots, thick lines</li>
+<li>Additive blending option</li>
+</ul>
+<hr />
+<h2 id="common-debugging-scenarios">Common Debugging Scenarios</h2>
+<p>Use this checklist when a preset differs between MilkDrop 2 (DX9) and
+<code>foo_vis_milk2</code> (DX11).</p>
+<h3 id="colors-wrong">Colors Wrong</h3>
+<ol type="1">
+<li><strong>Check for IEEE 754 issues.</strong> NaN propagation through
+the feedback loop is one of the most common causes of color divergence
+between DX9 and DX11.</li>
+<li><strong>Trace the shader math in the dumped source.</strong> Inspect
+generated shader text around the <code>ret</code> assignment to catch
+unexpected transformations.</li>
+<li><strong>Check shape alpha values.</strong> Low shape alpha produces
+small <code>VS[1]</code> contributions, and comp shader math can amplify
+tiny per-channel differences.</li>
+<li><strong>Toggle "Fix legacy shaders"</strong> in advanced preferences
+to compare behavior with and without automatic compatibility
+rewrites.</li>
+</ol>
+<h3
+id="preset-works-in-milkdrop-2-dx9-but-not-foo_vis_milk2-dx11">Preset
+Works in MilkDrop 2 (DX9) but not <code>foo_vis_milk2</code> (DX11)</h3>
+<ol type="1">
+<li><strong>Check shader model selection.</strong> Use <strong>Shader
+Model 2.0</strong> or <strong>Shader Model 2.x</strong> options in
+preferences (these map to DX11 compatibility profiles), not legacy
+<code>ps_2_*</code> assumptions.</li>
+<li><strong>Check EEL syntax compatibility.</strong> EEL1 compatibility
+mode is disabled; presets using constructs such as <code>assign</code>,
+<code>if</code>, <code>equal</code>, <code>above</code>, or
+<code>below</code> may require EEL2-style conversion.</li>
+<li><strong>Verify texture availability and naming.</strong> Missing
+textures can fall back differently than in DX9.</li>
+<li><strong>Check for HLSL variable shadowing and compiler-fix side
+effects.</strong> <code>foo_vis_milk2</code> may rename symbols that
+shadow built-in functions.</li>
+<li><strong>Compare behavior across driver versions and GPU
+vendors.</strong> Small differences in transcendental evaluation (for
+example <code>sin</code>, <code>cos</code>, <code>atan</code>,
+<code>pow</code>, <code>exp</code>, <code>log</code>) can accumulate
+through the feedback path and produce visible divergence.</li>
+</ol>
+<h3 id="shapes-wrong-size">Shapes Wrong Size</h3>
+<ol type="1">
+<li><strong>Check aspect ratio handling.</strong> DX11 path and DX9 path
+can differ in edge-case preset configurations.</li>
+<li><strong>Verify mesh size.</strong> Default mesh size is 48 × 36 (DX9
+MilkDrop used 32 × 24 or 48 × 36 depending on configuration).</li>
+</ol>
+<h3 id="recommended-advanced-debug-workflow">Recommended Advanced Debug
+Workflow</h3>
+<ol type="1">
+<li>In <strong>Advanced &gt; Visualization &gt; MilkDrop 2</strong>,
+turn <strong>Debug output</strong> on to dump shader source to
+<code>milkdrop2\debug\</code>.</li>
+<li>Reproduce the issue and inspect dumped warp/comp shader
+source/disassembly.</li>
+<li>Toggle <strong>Fix legacy shaders</strong> off to isolate whether a
+compatibility rewrite is involved.</li>
+<li>Enable <strong>Treat shader warnings as errors</strong> for strict
+compile mode (<code>/WX</code> equivalent) during investigation.</li>
+<li>Finally, try <strong>WARP</strong> to isolate issues between
+MilkDrop and the GPU/driver. To enable unconditionally, set
+<code>MILK2_FORCE_WARP</code> environment variable to 1.</li>
+</ol>
+<h3
+id="fxc-equivalent-compile-commands-used-by-foo_vis_milk2">FXC-Equivalent
+Compile Commands Used by <code>foo_vis_milk2</code></h3>
+<p><code>foo_vis_milk2</code> compiles through
+<code>D3DCompile()</code>, but these are the equivalent <code>fxc</code>
+command lines:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vertex shader</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>fxc <span class="op">/</span>E VS <span class="op">/</span>T vs_4_0_level_9_1 <span class="op">/</span>Gec your_shader<span class="op">.</span><span class="fu">hlsl</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Pixel shader profiles selected by shader mode</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>fxc <span class="op">/</span>E <span class="fu">PS</span> <span class="op">/</span>T ps_4_0_level_9_1 <span class="op">/</span>Gec your_shader<span class="op">.</span><span class="fu">hlsl</span>  <span class="co"># SM 2.0 compatibility path</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>fxc <span class="op">/</span>E <span class="fu">PS</span> <span class="op">/</span>T ps_4_0_level_9_3 <span class="op">/</span>Gec your_shader<span class="op">.</span><span class="fu">hlsl</span>  <span class="co"># SM 2.x compatibility path</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>fxc <span class="op">/</span>E <span class="fu">PS</span> <span class="op">/</span>T ps_4_0 <span class="op">/</span>Gec your_shader<span class="op">.</span><span class="fu">hlsl</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>fxc <span class="op">/</span>E <span class="fu">PS</span> <span class="op">/</span>T ps_5_0 <span class="op">/</span>Gec your_shader<span class="op">.</span><span class="fu">hlsl</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Strict mode when &quot;Treat shader warnings as errors&quot; is enabled</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>fxc <span class="op">/</span>E <span class="fu">PS</span> <span class="op">/</span>T ps_4_0_level_9_3 <span class="op">/</span>Gec <span class="op">/</span>WX your_shader<span class="op">.</span><span class="fu">hlsl</span></span></code></pre></div>
+<p>Notes:</p>
+<ul>
+<li>Entry points are <code>VS</code> and <code>PS</code>.</li>
+<li><code>/Gec</code> corresponds to
+<code>D3DCOMPILE_ENABLE_BACKWARDS_COMPATIBILITY</code>.</li>
+<li><code>/WX</code> corresponds to <strong>Treat shader warnings as
+errors</strong>.</li>
+<li>The DX11 implementation uses <code>ps_4_0_level_9_1</code> /
+<code>ps_4_0_level_9_3</code> for SM 2.x-style compatibility instead of
+direct <code>ps_2_*</code> targets.</li>
+</ul>
+<hr />
+<h2 id="key-constants-reference">Key Constants Reference</h2>
+<p>All constants, samplers, defines, and helper functions are declared
+in <code>include.fx</code>, which is prepended to every assembled
+shader.</p>
+<h3 id="constant-buffers">Constant Buffers</h3>
+<pre><code>_c0     = aspect ratio (.xy = UV multiplier for fullscreen aspect-aware paste; .zw = inverse)
+_c1     = (reserved)
+_c2     = (.x = time, .y = fps, .z = frame, .w = progress)
+_c3     = (.x = bass, .y = mid, .z = treb, .w = vol)
+_c4     = (.x = bass_att, .y = mid_att, .z = treb_att, .w = vol_att)
+_c5     = (.xy = blur1 scale+bias, .zw = blur2 scale+bias)
+_c6     = (.x = blur3 scale, .y = blur3 bias, .z = blur1_min, .w = blur1_max)
+_c7     = texsize (.x = width, .y = height, .z = 1/width, .w = 1/height)
+_c8     = roam_cos ~= 0.5 + 0.5 * cos(time * float4(~0.3, ~1.3, ~5, ~20))
+_c9     = roam_sin ~= 0.5 + 0.5 * sin(time * float4(~0.3, ~1.3, ~5, ~20))
+_c10    = slow_roam_cos ~= 0.5 + 0.5 * cos(time * float4(~0.005, ~0.008, ~0.013, ~0.022))
+_c11    = slow_roam_sin ~= 0.5 + 0.5 * sin(time * float4(~0.005, ~0.008, ~0.013, ~0.022))
+_c12    = (.x = mip_x, .y = mip_y, .z = mip_avg, .w = unused)
+_c13    = (.x = blur2_min, .y = blur2_max, .z = blur3_min, .w = blur3_max)</code></pre>
+<p>Additional constants for <code>foo_vis_milk2</code>:</p>
+<pre><code>_c14    = mouse (.xy = position, .z = button hold, .w = mouse click)
+_c15    = (.x = hour, .y = minute, .z = second, .w = total seconds)
+_c16    = (.x = year, .y = month, .z = day, .w = weekday 1-7)</code></pre>
+<h3 id="random-values">Random Values</h3>
+<pre><code>rand_frame    float4 random values updated each frame
+rand_preset   float4 random values set once at preset load</code></pre>
+<h3 id="q-variables-eel--shader-bridge">Q Variables (EEL ↔︎ Shader
+Bridge)</h3>
+<p>Q variables are set in EEL per-frame/per-vertex code and passed to
+shaders as packed <code>float4</code> banks:</p>
+<pre><code>_qa  = q1–q4       _qi  = q33–q36
+_qb  = q5–q8       _qj  = q37–q40
+_qc  = q9–q12      _qk  = q41–q44
+_qd  = q13–q16     _ql  = q45–q48
+_qe  = q17–q20     _qm  = q49–q52
+_qf  = q21–q24     _qn  = q53–q56
+_qg  = q25–q28     _qo  = q57–q60
+_qh  = q29–q32     _qp  = q61–q64</code></pre>
+<p>Individual q values are <code>#define</code>d (e.g.
+<code>#define q1 _qa.x</code>).</p>
+<h3 id="rotation-matrices">Rotation Matrices</h3>
+<p>24 <code>float4x3</code> rotation matrices with minor translation are
+available:</p>
+<pre><code>rot_s1–rot_s4     static: randomized at preset load time
+rot_d1–rot_d4     dynamic: slowly changing
+rot_f1–rot_f4     fast: faster changing
+rot_vf1–rot_vf4   very fast
+rot_uf1–rot_uf4   ultra fast
+rot_rand1–rot_rand4  random: re-randomized every frame</code></pre>
+<h3 id="predefined-macros">Predefined Macros</h3>
+<table>
+<thead>
+<tr>
+<th>Macro</th>
+<th>Expands To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>M_PI</code></td>
+<td><code>3.14159265359</code></td>
+</tr>
+<tr>
+<td><code>M_PI_2</code></td>
+<td><code>6.28318530718</code> (2π)</td>
+</tr>
+<tr>
+<td><code>M_INV_PI_2</code></td>
+<td><code>0.159154943091895</code> (1/2π)</td>
+</tr>
+<tr>
+<td><code>time</code></td>
+<td><code>_c2.x</code></td>
+</tr>
+<tr>
+<td><code>fps</code></td>
+<td><code>_c2.y</code></td>
+</tr>
+<tr>
+<td><code>frame</code></td>
+<td><code>_c2.z</code></td>
+</tr>
+<tr>
+<td><code>progress</code></td>
+<td><code>_c2.w</code></td>
+</tr>
+<tr>
+<td><code>bass</code> / <code>mid</code> / <code>treb</code> /
+<code>vol</code></td>
+<td><code>_c3.xyzw</code></td>
+</tr>
+<tr>
+<td><code>bass_att</code> / <code>mid_att</code> / <code>treb_att</code>
+/ <code>vol_att</code></td>
+<td><code>_c4.xyzw</code></td>
+</tr>
+<tr>
+<td><code>aspect</code></td>
+<td><code>_c0</code></td>
+</tr>
+<tr>
+<td><code>texsize</code></td>
+<td><code>_c7</code></td>
+</tr>
+<tr>
+<td><code>roam_cos</code> / <code>roam_sin</code></td>
+<td><code>_c8</code> / <code>_c9</code></td>
+</tr>
+<tr>
+<td><code>slow_roam_cos</code> / <code>slow_roam_sin</code></td>
+<td><code>_c10</code> / <code>_c11</code></td>
+</tr>
+<tr>
+<td><code>mip_x</code> / <code>mip_y</code> / <code>mip_avg</code></td>
+<td><code>_c12.x</code> / <code>.y</code> / <code>.z</code></td>
+</tr>
+<tr>
+<td><code>blur1_min</code> / <code>blur1_max</code></td>
+<td><code>_c6.zw</code></td>
+</tr>
+<tr>
+<td><code>blur2_min</code> / <code>blur2_max</code></td>
+<td><code>_c13.xy</code></td>
+</tr>
+<tr>
+<td><code>blur3_min</code> / <code>blur3_max</code></td>
+<td><code>_c13.zw</code></td>
+</tr>
+<tr>
+<td><code>mouse</code></td>
+<td><code>_c14</code> (also <code>mouse_x</code>, <code>mouse_y</code>,
+<code>mouse_pos</code>, <code>mouse_hold</code>,
+<code>mouse_click</code>)</td>
+</tr>
+<tr>
+<td><code>hour</code> / <code>minute</code> / <code>second</code> /
+<code>total_seconds</code></td>
+<td><code>_c15.xyzw</code></td>
+</tr>
+<tr>
+<td><code>year</code> / <code>month</code> / <code>day</code> /
+<code>weekday</code></td>
+<td><code>_c16.xyzw</code></td>
+</tr>
+<tr>
+<td><code>lum(x)</code></td>
+<td><code>dot(x, float3(0.32, 0.49, 0.29))</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="texture-helper-macros">Texture Helper Macros</h3>
+<pre class="hlsl"><code>GetMain(uv)         tex2D(sampler_main, uv).xyz
+GetPixel(uv)        tex2D(sampler_main, uv).xyz                  // alias for GetMain
+GetBlur1(uv)        tex2D(sampler_blur1, uv).xyz * scale + bias
+GetBlur2(uv)        tex2D(sampler_blur2, uv).xyz * scale + bias
+GetBlur3(uv)        tex2D(sampler_blur3, uv).xyz * scale + bias</code></pre>
+<h3 id="audio-texture-macros">Audio Texture Macros</h3>
+<pre class="hlsl"><code>get_fft(p)          FFT magnitude at normalized position p ∈ [0,1]
+get_fft_peak(p)     FFT peak-hold at normalized position p
+get_fft_hz(hz)      FFT magnitude at frequency in Hz (0–22050)
+get_fft_peak_hz(hz) FFT peak at frequency in Hz
+get_wave(p)         Waveform sample (average of L+R) at position p
+get_wave_left(p)    Left channel waveform at position p
+get_wave_right(p)   Right channel waveform at position p</code></pre>
+<p>Case-insensitive aliases are also defined: <code>GetFFT</code>,
+<code>GetFFTPeak</code>, <code>GetFFTHz</code>,
+<code>GetFFTPeakHz</code>, <code>GetWave</code>,
+<code>GetWaveLeft</code>, <code>GetWaveRight</code>.</p>
+<h3 id="safe-intrinsic-wrappers">Safe Intrinsic Wrappers</h3>
+<p><code>foo_vis_milk2</code> automatically rewrites shader intrinsic
+calls to use safe wrappers that prevent NaN/Infinity propagation under
+DX11 IEEE 754 rules. The replacement is done during shader assembly (in
+<code>shader.cpp</code>), so preset code calling e.g.
+<code>normalize(x)</code> actually executes
+<code>_safe_normalize(x)</code>.</p>
+<p>All safe functions are overloaded for <code>float</code>,
+<code>float2</code>, <code>float3</code>, and <code>float4</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Original Call</th>
+<th>Safe Wrapper</th>
+<th>Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>normalize(x)</code></td>
+<td><code>_safe_normalize(x)</code></td>
+<td>Returns 0 if <code>dot(x,x) == 0</code>, else
+<code>x * rsqrt(dot)</code></td>
+</tr>
+<tr>
+<td><code>sqrt(x)</code></td>
+<td><code>_safe_sqrt(x)</code></td>
+<td><code>sqrt(abs(x))</code></td>
+</tr>
+<tr>
+<td><code>log(x)</code></td>
+<td><code>_safe_log(x)</code></td>
+<td><code>log(max(1e-30, x))</code></td>
+</tr>
+<tr>
+<td><code>tan(x)</code></td>
+<td><code>_safe_tan(x)</code></td>
+<td><code>clamp(tan(x), -1e4, 1e4)</code></td>
+</tr>
+<tr>
+<td><code>pow(x, y)</code></td>
+<td><code>_safe_pow(x, y)</code></td>
+<td><code>pow(abs(x), y)</code></td>
+</tr>
+<tr>
+<td><code>asin(x)</code></td>
+<td><code>_safe_asin(x)</code></td>
+<td><code>asin(clamp(x, -1, 1))</code></td>
+</tr>
+<tr>
+<td><code>acos(x)</code></td>
+<td><code>_safe_acos(x)</code></td>
+<td><code>acos(clamp(x, -1, 1))</code></td>
+</tr>
+<tr>
+<td><code>atan2(y, x)</code></td>
+<td><code>_safe_atan2(y, x)</code></td>
+<td><code>atan2(y, x + 1e-20)</code></td>
+</tr>
+</tbody>
+</table>
+<p>Additionally, <code>_safe_denom(x)</code> replaces zero denominators
+with <code>1e-30</code> to prevent <code>0/0 → NaN</code> and
+<code>x/0 → Infinity</code>. Division wrapping is applied during shader
+compilation when <code>_safe_denom</code> is not already present.</p>
+<p>Note: these compatibility functions can be disabled in Advanced
+preferences by turning off <strong>Fix legacy shaders</strong>.</p>
+<h3 id="texture-lookup-aliases">Texture Lookup Aliases</h3>
+<p>Case-insensitive texture lookup aliases:</p>
+<pre class="hlsl"><code>tex1d   → tex1D
+tex2d   → tex2D
+tex3d   → tex3D
+texcube → texCUBE</code></pre>
+<hr />
+<h2 id="sampler-register-map">Sampler Register Map</h2>
+<p>Up to 16 sampler slots are available:</p>
+<h3 id="previous-frame-image-samplers">Previous-Frame Image
+Samplers</h3>
+<pre><code>sampler_main       default (bilinear, wrap)
+sampler_fw_main    bilinear, wrap
+sampler_fc_main    bilinear, clamp
+sampler_pw_main    point, wrap
+sampler_pc_main    point, clamp</code></pre>
+<p>All five sample from <code>PrevFrameImage</code> (VS[1] for comp,
+VS[0] for warp). The prefix encodes filter (F=bilinear, P=point) and
+address mode (W=wrap, C=clamp). Case-insensitive aliases are defined
+(e.g. <code>sampler_FW_main</code>).</p>
+<h3 id="built-in-noise-samplers">Built-in Noise Samplers</h3>
+<pre><code>sampler_noise_lq       256×256 noise (bilinear)
+sampler_noise_lq_lite  32×32 noise (bilinear)
+sampler_noise_mq       256×256 noise (4× cubic)
+sampler_noise_hq       256×256 noise (8× cubic)
+sampler_noisevol_lq    32×32×32 3D noise
+sampler_noisevol_hq    32×32×32 3D noise (4× cubic)</code></pre>
+<p>Each noise sampler has a matching <code>texsize_*</code>
+<code>float4</code> with
+<code>(width, height, 1/width, 1/height)</code>.</p>
+<h3 id="blur-samplers">Blur Samplers</h3>
+<pre><code>sampler_blur1    blur level 1
+sampler_blur2    blur level 2
+sampler_blur3    blur level 3</code></pre>
+<h3 id="audio-samplers">Audio Samplers</h3>
+<pre><code>sampler_fft      FFT audio spectrum texture (row 0.25 = magnitude, row 0.75 = peak)
+sampler_wave     Waveform audio texture (row 0.25 = left, row 0.75 = right)</code></pre>
+<p>User textures from disk are bound to available slots with
+prefix-based filtering and wrapping modes (FW/FC/PW/PC).</p>
+<hr />
+<h2 id="preset-fix-notes">Preset Fix Notes</h2>
+<h3 id="martin---lonely-goosemilk"><em>martin - lonely
+goose.milk</em></h3>
+<p>No changes needed as of v0.8.0.</p>
+<h3 id="nivush---torusmilk"><em>Nivush - Torus.milk</em></h3>
+<p>No changes needed as of v0.8.0.</p>
+<h3 id="martin---massif-central--x-x-x-y-y-z-z-milk"><em>martin - Massif
+Central -x-x-x-y-y-z-z-.milk</em></h3>
+<p>Restore missing wave:</p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode ini"><code class="sourceCode ini"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="dt">nWaveMode</span><span class="ot">=</span><span class="dv">1</span></span></code></pre></div>
+<h3 id="milkdrop2077-vs-martin---infinity-2milk"><em>MilkDrop2077 vs
+martin - infinity 2.milk</em></h3>
+<p>Looks very dark. Uses aggressive <code>fDecay=0.5</code> where the
+feedback loop amplifies small per-frame energy differences.</p>
+<h3 id="illusion--rovastar---clouded-bottlemilk"><em>Illusion &amp;
+Rovastar - Clouded Bottle.milk</em></h3>
+<p>The version included in the original MilkDrop 2 release has duplicate
+<code>per_frame_n</code> lines. Last assignment wins (INI parsing), so
+the preset is partially missing. Renumbering lines sequentially restores
+it.</p>
+<h3
+id="martin--se7enslasher---the-sewers-random-texture-editmilk"><em>martin
++ Se7enSlasher - the sewers (random texture edit).milk</em></h3>
+<p>Reduce speckle:</p>
+<pre class="text"><code>warp_14=`ret += 0.00035*rand_preset.x/max(rad,0.06)*treb_att*slow_roam_sin;
+comp_59=`ret += (neon*(1.5-q6/2) + 3.2*neons*noise.x)* near*nmask;
+comp_63=`ret += (GetBlur1(uv2)*0.45+0.06)*(noise*0.35*(.5+mid_att) + nshape*near*0.7);</code></pre>
+<h3 id="xordev---milkdrop2077---black-holemilk"><em>XorDev -
+MilkDrop2077 - Black hole.milk</em></h3>
+<p>Fix rotation:</p>
+<pre class="text"><code>comp_19=`    for(float i = 1; i &lt; 10; i++) {</code></pre>
+<h3 id="xordev---milkdrop2077---black-hole4milk"><em>XorDev -
+MilkDrop2077 - Black hole4.milk</em></h3>
+<p>Fix rotation:</p>
+<pre class="text"><code>comp_11=`    for(float i = 1; i &lt; 10; i++) {</code></pre>
+<h3
+id="hexcollie-tin-suksma-zylot-orb-n-flexi---blarffff-bubblemilk"><em>Hexcollie,
+Ti@N, Suksma, Zylot, Orb n Flexi - Blarffff Bubble.milk</em></h3>
+<p>Brighten final image:</p>
+<pre class="text"><code>comp_34=`             samples[i].y*(1/texsize.y)))*0.8;</code></pre>
+<h3
+id="milkdrop2077---martin---yellow-dots-and-wavesmilk"><em>MilkDrop2077
+- martin - Yellow Dots and Waves.milk</em></h3>
+<p>Large transcendental fix for AMD, restoring firefly positions and
+flashing (and star positions too):</p>
+<pre class="text"><code>warp_4=`      float3 p3 = frac(float3(p.xyx) * 0.1031); p3 += dot(p3, p3.yzx + 33.33); return frac((p3.x + p3.y) * p3.z);</code></pre>
+<footer class="doc-footer">
+  <a href="index.html">Return to Home</a>
+</footer>
+</body>
+</html>
