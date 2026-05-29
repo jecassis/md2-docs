@@ -105,6 +105,16 @@
 <li><a href="#foo_vis_milk2-manual"
 id="toc-foo_vis_milk2-manual"><code>foo_vis_milk2</code> Manual</a>
 <ul>
+<li><a href="#changes-since-v088-07825eb"
+id="toc-changes-since-v088-07825eb">Changes Since v0.8.8 (07825eb)</a>
+<ul>
+<li><a href="#new-capabilities" id="toc-new-capabilities">New
+Capabilities</a></li>
+<li><a href="#behavior-updates" id="toc-behavior-updates">Behavior
+Updates</a></li>
+<li><a href="#stability-fixes" id="toc-stability-fixes">Stability
+Fixes</a></li>
+</ul></li>
 <li><a href="#getting-started" id="toc-getting-started">Getting
 Started</a></li>
 <li><a href="#system-requirements" id="toc-system-requirements">System
@@ -170,6 +180,8 @@ Transitions</a></li>
 Rating</a></li>
 <li><a href="#preset-directory" id="toc-preset-directory">Preset
 Directory</a></li>
+<li><a href="#preset-renaming" id="toc-preset-renaming">Preset
+Renaming</a></li>
 <li><a href="#last-directory-and-preset-restore"
 id="toc-last-directory-and-preset-restore">Last Directory and Preset
 Restore</a></li>
@@ -194,8 +206,8 @@ id="toc-preset-audio-variables">Preset Audio Variables</a></li>
 <ul>
 <li><a href="#using-messages-at-runtime"
 id="toc-using-messages-at-runtime">Using Messages at Runtime</a></li>
-<li><a href="#fortune-slot-message99"
-id="toc-fortune-slot-message99">Fortune Slot
+<li><a href="#message-slot-99-message99"
+id="toc-message-slot-99-message99">Message Slot 99
 (<code>message99</code>)</a></li>
 <li><a href="#file-format" id="toc-file-format">File Format</a></li>
 <li><a href="#font-definitions" id="toc-font-definitions">Font
@@ -222,7 +234,9 @@ id="toc-readwrite-variables">Read/Write Variables</a></li>
 <li><a href="#blend-modes" id="toc-blend-modes">Blend Modes</a></li>
 <li><a href="#embedded-sprites" id="toc-embedded-sprites">Embedded
 Sprites</a></li>
-<li><a href="#example-1" id="toc-example-1">Example</a></li>
+<li><a href="#album-art-sprite-example-img100"
+id="toc-album-art-sprite-example-img100">Album Art Sprite Example
+(<code>img100</code>)</a></li>
 </ul></li>
 <li><a href="#track-info" id="toc-track-info">Track Info</a></li>
 <li><a href="#custom-shapes" id="toc-custom-shapes">Custom
@@ -254,6 +268,38 @@ component for foobar2000, based on the MilkDrop 2 engine. It renders
 real-time visual effects driven by audio input, using HLSL shaders and a
 per-frame expression evaluation system. <code>foo_vis_milk2</code>
 supports x86, x64, ARM64 and ARM64EC architectures.</p>
+<h2 id="changes-since-v088-07825eb">Changes Since v0.8.8 (07825eb)</h2>
+<h3 id="new-capabilities">New Capabilities</h3>
+<ul>
+<li>Added named pipe remote control via <strong>Enable remote
+control</strong> in Advanced Preferences.</li>
+<li>Added drag-and-drop support for <code>.wave</code> and
+<code>.shape</code> files to import custom waves/shapes into the running
+preset.</li>
+<li>Routed interactive operations through a render command queue to
+improve thread-safety for keyboard, mouse, and remote-control
+actions.</li>
+</ul>
+<h3 id="behavior-updates">Behavior Updates</h3>
+<ul>
+<li>In sequential mode, the initial startup pick is randomized once,
+then playback continues in sequential order.</li>
+<li>Preset rename preserves the original file extension
+(<code>.milk</code> or <code>.milk2</code>) and clamps name length to
+remain <code>MAX_PATH</code> safe.</li>
+<li>Exiting mashup mode applies pending slot selections and shows a
+warning that mixed preset code may differ after save/reload.</li>
+<li>Playback metadata is synchronized immediately after successful
+visualization initialization.</li>
+</ul>
+<h3 id="stability-fixes">Stability Fixes</h3>
+<ul>
+<li>Added guards for invalid EEL VM context reset/deallocation.</li>
+<li>Added guards to avoid shader constant-table crashes during shader
+updates.</li>
+<li>Added runtime-availability guards for preset-list/config
+synchronization during teardown and no-op rebuild paths.</li>
+</ul>
 <h2 id="getting-started">Getting Started</h2>
 <ol type="1">
 <li>Install <a href="https://www.foobar2000.org/download">foobar2000</a>
@@ -352,6 +398,10 @@ the same key combinations as global/application hotkeys.</p>
 <td>A</td>
 <td>Mashup — load warp from one preset, comp from another, base from a
 third</td>
+</tr>
+<tr>
+<td>INSERT</td>
+<td>Rename the selected preset in the load dialog</td>
 </tr>
 <tr>
 <td>SCROLL LOCK</td>
@@ -700,6 +750,10 @@ at a time:</p>
 <ul>
 <li><code>.milk</code> or <code>.milk2</code>: loads the dropped
 preset.</li>
+<li><code>.wave</code>: imports a custom wave into the first available
+wave slot.</li>
+<li><code>.shape</code>: imports a custom shape into the first available
+shape slot.</li>
 <li>Supported image files: launches the dropped image as a runtime
 sprite.</li>
 </ul>
@@ -754,8 +808,11 @@ Disabled when preset lock is on.</td>
 </tr>
 <tr>
 <td>Show Album Art</td>
-<td>Toggles album art visibility (only available when the configured
-artwork source exists).</td>
+<td>Toggles album art visibility by launching/removing sprite
+<code>img100</code> (when <code>milk2_img.ini</code> is present). Uses
+embedded album metadata art when <strong>Artwork display format</strong>
+is empty, or the configured <strong>Artwork display format</strong>
+override when non-empty.</td>
 </tr>
 <tr>
 <td>Launch Title</td>
@@ -784,8 +841,11 @@ fullscreen.</td>
 </tr>
 </tbody>
 </table>
+<p>Selecting <strong>Show Album Art</strong> launches sprite ID
+<code>100</code> using the behavior script from <code>[img100]</code> in
+<code>milk2_img.ini</code>.</p>
 <p>Menu command descriptions can be toggled in Advanced Preferences via
-<strong>Context menu descriptions</strong>.</p>
+<strong>Add context menu descriptions</strong>.</p>
 <h2 id="preferences">Preferences</h2>
 <p>Open <strong>File &gt; Preferences &gt; Visualization &gt; MilkDrop
 2</strong> to configure the component. Settings are stored in
@@ -1040,7 +1100,8 @@ track.</td>
 <tr>
 <td>Artwork format</td>
 <td><em>(empty)</em></td>
-<td>Format string for resolving album artwork path.</td>
+<td>foobar2000 title format expression for artwork path resolution.
+Empty uses album metadata lookup.</td>
 </tr>
 <tr>
 <td>Show album</td>
@@ -1049,6 +1110,29 @@ track.</td>
 </tr>
 </tbody>
 </table>
+<h4 id="artwork-display-format">Artwork Display Format</h4>
+<p>The <strong>Artwork format</strong> preference (labeled
+<strong>Artwork display format</strong> in the dialog) supports these
+patterns:</p>
+<ul>
+<li>Leave it empty to use foobar2000 album metadata lookup
+(embedded/standard album art).</li>
+<li>Use a fixed absolute path to always show one image, for example:
+<code>C:\Music\art\default.jpg</code>.</li>
+<li>Use a per-track expression based on tags/path, for example:
+<code>$directory_path(%path%)\cover.jpg</code> or
+<code>$replace(%path%,%filename_ext%,jpg)</code>.</li>
+</ul>
+<p>Keep in mind:</p>
+<ul>
+<li>The resolved value should be a fully qualified file path.</li>
+<li>If this field is non-empty, it overrides embedded album metadata
+lookup.</li>
+<li>If the expression is invalid, Preferences shows
+<code>&lt;ERROR&gt;</code>.</li>
+<li>If the expression is valid but resolves to a missing file, no
+artwork is shown.</li>
+</ul>
 <h3 id="audio-analysis">Audio Analysis</h3>
 <table>
 <thead>
@@ -1231,7 +1315,7 @@ safe intrinsics, bool-to-int conversions, variable shadowing renames).
 Disable only for debugging.</td>
 </tr>
 <tr>
-<td>Treat shader warnings as errors</td>
+<td>Treat shader compile warnings as errors</td>
 <td>Off</td>
 <td>Promote HLSL compilation warnings to errors, causing the shader to
 fail instead of compiling with warnings. Enable only for preset
@@ -1244,20 +1328,27 @@ development.</td>
 <code>milkdrop2\cache\</code> when foobar2000 exits.</td>
 </tr>
 <tr>
-<td>Fortune executable</td>
+<td>Message executable</td>
 <td><em>(empty)</em></td>
 <td>Optional external command used to generate dynamic text for message
 slot <code>99</code>.</td>
 </tr>
 <tr>
-<td>Fortune arguments</td>
+<td>Message arguments</td>
 <td><em>(empty)</em></td>
-<td>Optional argument string passed to <strong>Fortune
+<td>Optional argument string passed to <strong>Message
 executable</strong>. Environment variables are expanded before
 launch.</td>
 </tr>
 <tr>
-<td>Context menu descriptions</td>
+<td>Enable remote control</td>
+<td>On</td>
+<td>Enable Milkwave-compatible named pipe control via
+<code>\\.\pipe\Milkwave_&lt;foobar2000 PID&gt;_&lt;instance ID&gt;</code>.
+Applied when the visualization instance is created.</td>
+</tr>
+<tr>
+<td>Add context menu descriptions</td>
 <td>On</td>
 <td>Enable descriptive text for context-menu commands in Default
 UI.</td>
@@ -1272,6 +1363,33 @@ armed separately with <strong>CTRL+D</strong> (source) and
 </tr>
 </tbody>
 </table>
+<p>Note: The <strong>Enable remote control</strong> setting is intended
+to apply on visualization startup. If changed while the visualizer is
+already running, close and reopen the visualization window (or restart
+foobar2000).</p>
+<h4 id="named-pipe-remote-control">Named Pipe Remote Control</h4>
+<p>When enabled, each visualization instance creates a named pipe
+endpoint:</p>
+<p><code>\\.\pipe\Milkwave_&lt;foobar2000 PID&gt;_&lt;instance ID&gt;</code></p>
+<p>Supported incoming commands:</p>
+<p>| Command | Effect | | -------------------------------------- |
+---------------------------------------------------- |
+--------------------------------- | | <code>SIGNAL\|NEXT_PRESET</code> |
+Load next preset | | <code>SIGNAL\|PREV_PRESET</code> | Load previous
+preset | | <code>SIGNAL\|CAPTURE</code> or <code>CAPTURE</code> |
+Capture screenshot | | <code>SIGNAL\|FULLSCREEN</code> | Toggle
+fullscreen | | <code>SIGNAL\|COVER_CHANGED</code> | Refresh album-art
+sprite | | <code>CLEARTEXTS</code> | Clear active text overlays | |
+<code>CLEARSPRITES</code> | Clear active sprites | |
+<code>MSG=&lt;text&gt;</code> or <code>MSG\|TEXT=&lt;text&gt;</code> |
+Launch custom message in slot <code>99</code> | |
+<code>SEND=&lt;text&gt;</code> | Send text input to waitstring/message
+input handlers | | <code>SEND=0xNN</code> | Send a virtual key
+(<code>0xNN</code> hex) | |
+<code>PRESET_LOCK=&lt;0/1/ON/OFF/LOCK/UNLOCK&gt;</code> | Set
+preset-lock state | | <code>STATE</code> | Broadcast current
+<code>PRESET=...</code>, <code>SETTINGS            | ...</code>, and
+<code>PROFILE=...</code> responses |</p>
 <h2 id="presets">Presets</h2>
 <p>Presets are <code>.milk</code> files that define visual behavior
 through per-frame equations, per-pixel equations, custom shapes, custom
@@ -1288,6 +1406,9 @@ blend</li>
 <li>Press <strong>A</strong> for a mashup that combines shaders from
 multiple presets</li>
 </ul>
+<p>When you exit mashup mode with <strong>ESC</strong>, any pending
+mashup selections are applied and a warning is shown that mixed preset
+code may not serialize/reload identically.</p>
 <h3 id="preset-transitions">Preset Transitions</h3>
 <ul>
 <li><strong>SPACE</strong>: Soft blend to the next preset (uses the
@@ -1336,6 +1457,15 @@ presets. To use per-preset ratings, disable recursive scanning.</p>
 <p>Configure via <strong>File &gt; Preferences &gt; Visualization &gt;
 MilkDrop 2</strong>. Subdirectories are scanned recursively
 (optional).</p>
+<h3 id="preset-renaming">Preset Renaming</h3>
+<p>In the preset load dialog, press <strong>INSERT</strong> on a preset
+file to rename it.</p>
+<ul>
+<li>The original extension is preserved (for example,
+<code>.milk2</code> stays <code>.milk2</code>).</li>
+<li>Rename length is clamped so the final full path remains within Win32
+<code>MAX_PATH</code>.</li>
+</ul>
 <h3 id="last-directory-and-preset-restore">Last Directory and Preset
 Restore</h3>
 <p><code>foo_vis_milk2</code> persists two related values per UI
@@ -1364,8 +1494,9 @@ falls back to the Advanced Preferences base preset directory.</li>
 <ul>
 <li>If preset lock is enabled and a saved last preset filename exists,
 that preset is loaded from the restored directory.</li>
-<li>Otherwise, normal startup selection applies (schedule-driven first,
-then random if no schedule row is available).</li>
+<li>Otherwise, normal startup selection applies (schedule-driven first;
+if no schedule row is available, sequential mode picks a random first
+preset, then continues sequentially).</li>
 </ul></li>
 </ul>
 <p>Practical note:</p>
@@ -1664,12 +1795,12 @@ start over.</li>
 <li>Press <strong>F7</strong> (while in message mode) to reload
 <code>milk2_msg.ini</code> from disk without restarting.</li>
 </ol>
-<h3 id="fortune-slot-message99">Fortune Slot
+<h3 id="message-slot-99-message99">Message Slot 99
 (<code>message99</code>)</h3>
 <ul>
 <li>Slot <code>99</code> can be used as a dynamic "fortune" message
 style.</li>
-<li>When <strong>Fortune executable</strong> is configured, launching
+<li>When <strong>Message executable</strong> is configured, launching
 message <code>99</code> replaces its text with captured process
 output.</li>
 <li>If the external command is unavailable or returns no usable text,
@@ -1921,8 +2052,12 @@ class="sourceCode ini"><code class="sourceCode ini"><span id="cb2-1"><a href="#c
 <code>milk2_img.ini</code> (located in <code>milkdrop2\</code>). Each
 sprite has an image file, blend mode, position, scale, rotation, and
 programmable animation code using EEL expressions. Up to 16 sprites can
-be on screen simultaneously, and up to 100 sprite definitions (00–99)
-can exist in the file.</p>
+be on screen simultaneously, and up to 100 runtime sprite definitions
+(00–99) can exist in the file.</p>
+<p>Album art uses the same sprite system via a special
+<code>[img100]</code> section. Sprite ID <code>100</code> is reserved
+for album art and is the only sprite that persists across preset
+changes.</p>
 <p>The file uses the same INI comment conventions as
 <code>milk2_msg.ini</code>: lines starting with
 <strong><code>;</code></strong> are comments (see <a
@@ -1962,7 +2097,8 @@ href="#file-format">File Format</a> above).</p>
 <code>img=</code> paths can also use
 <code>.jpeg</code>/<code>.jfif</code> when supported by WIC codecs.</p>
 <h3 id="image-file-paths">Image File Paths</h3>
-<p>The <code>img=</code> line is mandatory. Paths can be relative or
+<p>The <code>img=</code> line is mandatory for normal runtime sprite
+slots (<code>img00</code>-<code>img99</code>). Paths can be relative or
 absolute:</p>
 <table>
 <thead>
@@ -2005,6 +2141,9 @@ absolute:</p>
 </tr>
 </tbody>
 </table>
+<p>For album art (<code>img100</code>), the image source comes from
+current track artwork (embedded metadata or <strong>Artwork display
+format</strong>), so <code>img=</code> is not required.</p>
 <h3 id="texture-memory-notes">Texture Memory Notes</h3>
 <ul>
 <li>Textures can be up to 2048×2048 and do not need to be square.</li>
@@ -2296,21 +2435,26 @@ the preset is active. Toggle auto-loading with
 <strong>CTRL+L</strong>.</p>
 <p>Auto-load compatibility is enabled for <code>.milk2</code> presets
 and for compatible MilkDrop 3 preset states.</p>
-<h3 id="example-1">Example</h3>
+<h3 id="album-art-sprite-example-img100">Album Art Sprite Example
+(<code>img100</code>)</h3>
+<p>To customize album-art motion/compositing, script
+<code>[img100]</code> in <code>milk2_img.ini</code>.</p>
+<p>Regression note: during the initial MilkDrop 3 blend-mode parity
+update, scripted <code>img100</code> behavior could be bypassed, which
+caused artwork to appear centered on-screen. This has been restored for
+the next release.</p>
 <div class="sourceCode" id="cb4"><pre
-class="sourceCode ini"><code class="sourceCode ini"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[img04]</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dt">desc</span><span class="ot">=</span><span class="st">&quot;An object drifts across the screen periodically.&quot;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dt">img</span><span class="ot">=</span><span class="st">textures\smalltiled_electric_nebula.jpg</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="dt">init_1</span><span class="ot">=</span><span class="st">blendmode = 3;</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="dt">init_2</span><span class="ot">=</span><span class="st">x = -100;</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="dt">init_3</span><span class="ot">=</span><span class="st">orig_y = 0.5;</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="dt">code_1</span><span class="ot">=</span><span class="st">time_to_reset = below(x,-0.5);</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="dt">code_2</span><span class="ot">=</span><span class="st">x = x*(1-time_to_reset) + time_to_reset*(1.5 + 0.01*rand(100) + 3);</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="dt">code_3</span><span class="ot">=</span><span class="st">orig_y = orig_y*(1-time_to_reset) + time_to_reset*(0.3 + 0.4*0.01*rand(100));</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="dt">code_4</span><span class="ot">=</span><span class="st">sx = sx*(1-time_to_reset) + time_to_reset*(0.25 + 0.4*0.01*rand(100));</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="dt">code_5</span><span class="ot">=</span><span class="st">sy = sx;</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="dt">code_6</span><span class="ot">=</span><span class="st">x = x - 0.008 + 0.0033*sin(time*1.371);</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="dt">code_7</span><span class="ot">=</span><span class="st">y = orig_y + 0.12*sin(time*1.9);</span></span></code></pre></div>
+class="sourceCode ini"><code class="sourceCode ini"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[img100]</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dt">init_1</span><span class="ot">=</span><span class="st">blendmode = 3;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="dt">init_2</span><span class="ot">=</span><span class="st">x = -100;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="dt">init_3</span><span class="ot">=</span><span class="st">orig_y = 0.5;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="dt">code_1</span><span class="ot">=</span><span class="st">time_to_reset = below(x,-0.5);</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="dt">code_2</span><span class="ot">=</span><span class="st">x = x*(1-time_to_reset) + time_to_reset*(1.5 + 0.01*rand(100) + 3);</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="dt">code_3</span><span class="ot">=</span><span class="st">orig_y = orig_y*(1-time_to_reset) + time_to_reset*(0.3 + 0.4*0.01*rand(100));</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="dt">code_4</span><span class="ot">=</span><span class="st">sx = sx*(1-time_to_reset) + time_to_reset*(0.25 + 0.4*0.01*rand(100));</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="dt">code_5</span><span class="ot">=</span><span class="st">sy = sx;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="dt">code_6</span><span class="ot">=</span><span class="st">x = x - 0.008 + 0.0033*sin(time*1.371);</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="dt">code_7</span><span class="ot">=</span><span class="st">y = orig_y + 0.12*sin(time*1.9);</span></span></code></pre></div>
 <h2 id="track-info">Track Info</h2>
 <p><code>foo_vis_milk2</code> displays current track information using
 foobar2000's title format system. The format string is configurable in
